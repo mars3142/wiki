@@ -6,7 +6,8 @@ Das sollte mein erster Arduino-Cache (Codename) "Panzerknacker" werden.
 
 ## Sourcecode
 
-<file c++ gc370hg.ino>
+{% hightlight c %}
+
 /*--------------------------------------------------------------------------------------
  Includes
  --------------------------------------------------------------------------------------*/
@@ -289,8 +290,8 @@ void changeNumber( int pos, int value )
   if (val > 9) val = 0;
   code[pos] = (char) val + '0';
 }
-</file>
+{% endhighlight %}
 
-## St�ckliste
+## Stückliste
 
 ## Schaltplan
