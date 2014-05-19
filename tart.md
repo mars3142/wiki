@@ -1,3 +1,7 @@
+---
+title: START
+layout: default
+---
 # Willkommen
 
 Hier möchte ich für den geneigten Leser ein paar interessante Dinge über meine Projekte hinterlegen.
