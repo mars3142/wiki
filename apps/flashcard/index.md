@@ -9,7 +9,7 @@ Ich habe im [Play Store](http://play.google.com/) keine gute kostenlose App dazu
 
 Da es sich um ein hoffentlich recht kleines Projekt handeln wird, habe ich es als Open Source Projekt angesetzt. Die Sourcen werden unter <http://github.com/mars3142/flashcard> und die Projektseite unter <http://mars3142.github.io/flashcard> verfügbar sein.
 
-===== mögliche Features =====
+## mögliche Features 
 
   * Daten in GDrive sichern
   * Integration von <http://quizlet.com/>
