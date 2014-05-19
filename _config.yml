@@ -1,0 +1,22 @@
+name: "wiki.mars3142.de"
+description: "everything you want to know..."
+
+#url: "http://wiki.mars3142.de"
+url: ""
+
+#paginate: 10
+
+markdown: redcarpet
+markdown_ext: markdown,mkdown,mkdn,mkd,md
+#permalink: pretty
+highlighter: pygments
+
+safe: true
+lsi: false
+
+github:
+    project_title: "Wiki"
+    project_tagline: "Experimental Wiki with Jekyll"
+
+redcarpet:
+    extensions: ["autolink"]
