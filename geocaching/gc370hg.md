@@ -291,6 +291,6 @@ void changeNumber( int pos, int value )
 }
 </file>
 
-## Stückliste
+## Stï¿½ckliste
 
 ## Schaltplan
