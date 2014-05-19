@@ -6,7 +6,7 @@ Das sollte mein erster Arduino-Cache (Codename) "Panzerknacker" werden.
 
 ## Sourcecode
 
-{% highlight c %}
+{% highlight c++ %}
 
 /*--------------------------------------------------------------------------------------
  Includes
