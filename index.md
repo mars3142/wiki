@@ -11,5 +11,5 @@ Dieses Wiki hat mehrere Bereiche. Damit man sich schneller zu recht findet, ist 
   - [Apps]
   - [Geocaching]
 
-[Apps]:http://wiki.mars3142.org/apps
-[Geocaching]:http://wiki.mars3142.org/geocaching
+[Apps]:/apps
+[Geocaching]:/geocaching

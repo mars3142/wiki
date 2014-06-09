@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+    <link rel="stylesheet" type="text/css" href="/css/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="/css/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="/css/print.css" media="print" />
+
+    <title>Logistics :: wiki.mars3142.de</title>
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js" type="text/javascript"></script>
+  </head>
+
+  <body>
+
+    <header>
+      <div class="container">
+        <h1>wiki.mars3142.de</h1>
+        <h2>everything you want to know...</h2>
+
+        <section id="downloads">
+          <a href="https://github.com/mars3142/wiki/zipball/master" class="btn">Download as .zip</a>
+          <a href="https://github.com/mars3142/wiki/tarball/master" class="btn">Download as .tar.gz</a>
+          <a href="https://github.com/mars3142/wiki" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
+        </section>
+      </div>
+    </header>
+    <div class="container">
+      <h1 id="pagetitle">Logistics</h1>
+      <section id="main_content">
+        
+        <p>Logistics ist als Spiel geplant, welches unter Android laufen soll. Derzeit ist es noch in der Planungs- bzw. Probierphase. Es ist durch das Spiel <a href="http://de.wikipedia.org/wiki/Der_Planer">Der Planer</a> inspiriert. Ich habe sogar mit Holger Beisheim (geb. Dickmann) gemailt und somit den rechtlichen Rahmen abgeklärt.</p>
+
+<p>Es gibt zwei Seiten auf Google+ bzgl. dem Spiel. Die eine Seite ist die <a href="https://plus.google.com/communities/112783520362507786585">Community</a>, wo sich Spieler austauschen können und das andere ist das <a href="https://plus.google.com/107995254283921704484/posts">Profil</a>, wo ich wichtige Bekanntmachungen veröffentlichen werde. Vielleicht mache ich das auch nur alles in der Community.</p>
+
+<h2>Grundlagen</h2>
+
+<p>Mein erster Versuch war, das Spiel per <a href="http://developer.android.com/reference/android/opengl/GLSurfaceView.html">GLSurfaceView</a> zu erstellen, aber hat sich für mich als sehr umständlich herausgestellt. Der zweite Versuch war dann die beliebte <a href="http://www.andengine.org/">AndEngine</a> zu benutzen, doch irgendwie kam ich damit auch nicht so wirklich weiter. </p>
+
+<p>Weitere Nachforschungen brachten mich dann zu <a href="http://libgdx.badlogicgames.com/">libgdx</a> und dann habe ich noch durch Zufall <a href="http://gamadu.com/artemis/">artemis</a> gefunden, die im Zusammenspiel gut sein sollen. Libgdx hat den Vorteil, dass man plattformübergreifend mit Java entwickeln kann und somit direkt auf dem Desktop entwickeln und debuggen kann. Später wird dann einfach ein anderer Starter für Android genommen und der Code klappt damit genauso unter Android. Außerderm könnte man ohne viel Aufwand fürs Web (mit Hilfe des <a href="https://developers.google.com/web-toolkit/">Google Web Toolkits</a>) oder für iOS (via <a href="http://xamarin.com/monotouch%7CMonotouch">MonoTouch</a>) ebenfalls Versionen erstellen.</p>
+
+<p>So bin ich also gerade an dem Punkt angelangt, wo ich mir libgdx und artemis genauer anschaue...</p>
+
+<h2>libgdx</h2>
+
+<p>Die Wahl von libgdx war bis jetzt am erfolgreichsten. Dank der Tutorials von <a href="http://dermetfan.bplaced.net/">dermetfan</a> verstehe ich auch die Scene2d Implementation und kann es direkt in meinem Projekt anwenden. Leider ist an mir kein Designer verloren gegangen und somit wird mein Prototyp sicher alles andere als grafisch eine Sensation, aber durch einen glücklichen Umstand habe ich im libgdx Forum ein Holo UI Skin gefunden und dieses werde ich für den Anfang nehmen. Der Ersteller (Carsten) ist ebenfalls ein deutschsprachiger und somit werden Anpassungen recht schnell umgesetzt.</p>
+
+<p>Außerdem wird es eine Version in deutsch und englisch geben, zumindest am Anfang. Die Sprachen können auch direkt im Spiel geändert werden, weil ich z.B. meine Testgeräte auf englisch gestellt habe, aber auch die deutschen Texte testen muss. Dabei möchte ich nicht immer erst die Systemsprache anpassen.</p>
+
+<h2>artemis</h2>
+
+<p>Artemis ist ein Entity System Framework und somit kann ich es gut für einzelne Bereiche im Spiel einsetzen. Welche das sein werden, weiß ich noch nicht, aber es wird garantiert in der <a href="daydream">Daydream</a> Funktionalität genutzt werden.</p>
+
+<h2>ashley</h2>
+
+<p>Neben Artemis gibt es noch ein zweites Entity System Framework, welches derzeit sogar noch teilweise weiterentwickelt wird. Der einzige Unterschied, den ich zu Artemis feststellen konnte, ist der Fakt, dass es viel allgemeiner gehalten ist.</p>
+
+<h2>Funktionen</h2>
+
+<p>Hier eine grobe Übersicht der wichtigsten Funktionen die später im Spiel eingebaut sein sollen.</p>
+
+<ul>
+<li><a href="daydream">Daydream</a> - Bildschirmschoner (Android 4.2+)</li>
+<li><a href="googleplaygameservice">Google Play Game Service</a> - Unterstützung für Erfolge und/oder Highscore</li>
+</ul>
+
+<p>Außerdem sind noch ein paar Fragen offen, die ich unter <a href="open">Offene Punkte</a> zusammenfasse. Es ist also eine Art Ideensammlung.</p>
+
+      </section>
+    </div>
+
+  </body>
+</html>

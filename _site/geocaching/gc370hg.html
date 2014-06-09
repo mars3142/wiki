@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+    <link rel="stylesheet" type="text/css" href="/css/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="/css/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="/css/print.css" media="print" />
+
+    <title>GC370HG - Panzerknacker :: wiki.mars3142.de</title>
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js" type="text/javascript"></script>
+  </head>
+
+  <body>
+
+    <header>
+      <div class="container">
+        <h1>wiki.mars3142.de</h1>
+        <h2>everything you want to know...</h2>
+
+        <section id="downloads">
+          <a href="https://github.com/mars3142/wiki/zipball/master" class="btn">Download as .zip</a>
+          <a href="https://github.com/mars3142/wiki/tarball/master" class="btn">Download as .tar.gz</a>
+          <a href="https://github.com/mars3142/wiki" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
+        </section>
+      </div>
+    </header>
+    <div class="container">
+      <h1 id="pagetitle">GC370HG - Panzerknacker</h1>
+      <section id="main_content">
+        
+        <p>Das sollte mein erster Arduino-Cache (Codename) &quot;Panzerknacker&quot; werden.</p>
+
+<h2>Sourcecode</h2>
+
+<div class="highlight"><pre><code class="c++"><span class="cm">/*--------------------------------------------------------------------------------------</span>
+<span class="cm"> Includes</span>
+<span class="cm"> --------------------------------------------------------------------------------------*/</span>
+<span class="cp">#include &lt;LiquidCrystal.h&gt;   </span><span class="c1">// include LCD library</span>
+
+<span class="cm">/*--------------------------------------------------------------------------------------</span>
+<span class="cm"> Defines</span>
+<span class="cm"> --------------------------------------------------------------------------------------*/</span>
+<span class="cp">#define EMPTYLINE      &quot;                &quot;</span>
+<span class="cp">#define COPYRIGHTLINE1 &quot;(c) 2012 by     &quot;</span>
+<span class="cp">#define COPYRIGHTLINE2 &quot;mars3142        &quot;</span>
+<span class="cp">#define ACCESSGRANTED  &quot;ACCESS GRANTED  &quot;</span>
+<span class="cp">#define ACCESSDENIED   &quot;ACCESS DENIED   &quot;</span>
+<span class="cp">#define COORDINATEN    &quot;N XX XX.XXX     &quot; </span><span class="c1">// real next north coordinates</span>
+<span class="cp">#define COORDINATEE    &quot;EXXX XX.XXX     &quot; </span><span class="c1">// real next east coordinates</span>
+<span class="cp">#define CODEINPUT      &quot;INPUT CODE      &quot;</span>
+
+<span class="cp">#define CODE           &quot;0000&quot;             </span><span class="c1">// code to receive the next coordinates</span>
+<span class="cp">#define NUMKEYS        5</span>
+
+<span class="cm">/*--------------------------------------------------------------------------------------</span>
+<span class="cm"> Init the LCD library with the LCD pins to be used</span>
+<span class="cm"> --------------------------------------------------------------------------------------*/</span>
+<span class="n">LiquidCrystal</span> <span class="nf">lcd</span><span class="p">(</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span> <span class="p">);</span>
+
+<span class="cm">/*--------------------------------------------------------------------------------------</span>
+<span class="cm"> Initial code to display</span>
+<span class="cm"> --------------------------------------------------------------------------------------*/</span>
+<span class="kt">char</span><span class="o">*</span> <span class="n">code</span><span class="p">;</span>
+
+<span class="cm">/*--------------------------------------------------------------------------------------</span>
+<span class="cm"> Position of the input cursor (zero based)</span>
+<span class="cm"> --------------------------------------------------------------------------------------*/</span>
+<span class="kt">int</span> <span class="n">pos</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+<span class="cm">/*--------------------------------------------------------------------------------------</span>
+<span class="cm"> If solution is correct</span>
+<span class="cm"> --------------------------------------------------------------------------------------*/</span>
+<span class="kt">bool</span> <span class="n">correct</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+
+<span class="cm">/*--------------------------------------------------------------------------------------</span>
+<span class="cm"> loop of correct answer</span>
+<span class="cm"> --------------------------------------------------------------------------------------*/</span>
+<span class="kt">int</span> <span class="n">loopCount</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+<span class="cm">/*--------------------------------------------------------------------------------------</span>
+<span class="cm"> Input value of keys</span>
+<span class="cm"> (left, up, down, righ, select)</span>
+<span class="cm"> --------------------------------------------------------------------------------------*/</span>
+<span class="kt">int</span> <span class="n">key_val</span><span class="p">[</span><span class="n">NUMKEYS</span><span class="p">]</span> <span class="o">=</span><span class="p">{</span> 
+  <span class="mi">50</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">400</span><span class="p">,</span> <span class="mi">600</span><span class="p">,</span> <span class="mi">800</span> <span class="p">};</span> 
+
+<span class="kt">int</span> <span class="n">old_key</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+
+<span class="cm">/*--------------------------------------------------------------------------------------</span>
+<span class="cm"> setup()</span>
+<span class="cm"> Called by the Arduino framework once, before the main loop begins</span>
+<span class="cm"> --------------------------------------------------------------------------------------*/</span>
+<span class="kt">void</span> <span class="nf">setup</span><span class="p">()</span>
+<span class="p">{</span>
+  <span class="c1">// set up the LCD number of columns and rows</span>
+  <span class="n">lcd</span><span class="p">.</span><span class="n">begin</span><span class="p">(</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">2</span> <span class="p">);</span>
+
+  <span class="n">code</span> <span class="o">=</span> <span class="s">&quot;0000&quot;</span><span class="p">;</span>
+
+  <span class="c1">// print copyright</span>
+  <span class="n">printText</span><span class="p">(</span> <span class="n">COPYRIGHTLINE1</span><span class="p">,</span> <span class="n">COPYRIGHTLINE2</span> <span class="p">);</span>
+  <span class="n">delay</span><span class="p">(</span> <span class="mi">1000</span> <span class="p">);</span>
+
+  <span class="n">clearDisplay</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="cm">/*--------------------------------------------------------------------------------------</span>
+<span class="cm"> loop()</span>
+<span class="cm"> Arduino main loop</span>
+<span class="cm"> --------------------------------------------------------------------------------------*/</span>
+<span class="kt">void</span> <span class="nf">loop</span><span class="p">()</span>
+<span class="p">{</span>
+  <span class="c1">// read input</span>
+  <span class="kt">int</span> <span class="n">key</span> <span class="o">=</span> <span class="n">analogRead</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+  <span class="n">key</span> <span class="o">=</span> <span class="n">get_key</span><span class="p">(</span> <span class="n">key</span> <span class="p">);</span>
+
+  <span class="k">if</span> <span class="p">(</span> <span class="n">key</span> <span class="o">!=</span> <span class="n">old_key</span> <span class="p">)</span> 
+  <span class="p">{</span>
+    <span class="k">switch</span> <span class="p">(</span> <span class="n">key</span> <span class="p">)</span>
+    <span class="p">{</span>
+    <span class="k">case</span> <span class="mi">0</span>: <span class="c1">// right</span>
+      <span class="n">pos</span><span class="o">++</span><span class="p">;</span>
+      <span class="k">if</span> <span class="p">(</span><span class="n">pos</span> <span class="o">&gt;</span> <span class="mi">3</span><span class="p">)</span> <span class="n">pos</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+      <span class="k">break</span><span class="p">;</span>
+
+    <span class="k">case</span> <span class="mi">1</span>: <span class="c1">// up</span>
+      <span class="n">changeNumber</span><span class="p">(</span> <span class="n">pos</span><span class="p">,</span> <span class="o">+</span><span class="mi">1</span> <span class="p">);</span>
+      <span class="k">break</span><span class="p">;</span>
+
+    <span class="k">case</span> <span class="mi">2</span>: <span class="c1">// down</span>
+      <span class="n">changeNumber</span><span class="p">(</span> <span class="n">pos</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span> <span class="p">);</span>
+      <span class="k">break</span><span class="p">;</span>
+
+    <span class="k">case</span> <span class="mi">3</span>: <span class="c1">// left</span>
+      <span class="n">pos</span><span class="o">--</span><span class="p">;</span>
+      <span class="k">if</span> <span class="p">(</span><span class="n">pos</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="n">pos</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+      <span class="k">break</span><span class="p">;</span>
+
+    <span class="k">case</span> <span class="mi">4</span>: <span class="c1">// select</span>
+      <span class="k">if</span> <span class="p">(</span><span class="n">code</span> <span class="o">==</span> <span class="n">CODE</span><span class="p">)</span>
+      <span class="p">{</span>
+        <span class="n">correct</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+      <span class="p">}</span>
+      <span class="k">else</span>
+      <span class="p">{</span>
+        <span class="n">showAccess</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
+        <span class="n">delay</span><span class="p">(</span> <span class="mi">1000</span> <span class="p">);</span>
+      <span class="p">}</span>
+      <span class="k">break</span><span class="p">;</span>
+
+    <span class="nl">default:</span>
+      <span class="n">key</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+
+  <span class="c1">// show values</span>
+  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">correct</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="n">printText</span><span class="p">(</span> <span class="n">CODEINPUT</span><span class="p">,</span> <span class="n">code</span><span class="p">,</span> <span class="mi">200</span> <span class="p">);</span>
+    <span class="n">printText</span><span class="p">(</span> <span class="n">CODEINPUT</span><span class="p">,</span> <span class="n">hideChar</span><span class="p">(</span> <span class="n">code</span><span class="p">,</span> <span class="n">pos</span> <span class="p">),</span> <span class="mi">100</span> <span class="p">);</span>
+  <span class="p">}</span>
+  <span class="k">else</span>
+  <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span> <span class="n">loopCount</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">)</span> <span class="n">showAccess</span><span class="p">(</span> <span class="nb">true</span> <span class="p">);</span>
+    <span class="n">showCoordinates</span><span class="p">();</span>
+    <span class="n">loopCount</span><span class="o">++</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="n">old_key</span> <span class="o">=</span> <span class="n">key</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="cm">/*--------------------------------------------------------------------------------------</span>
+<span class="cm"> clearDisplay()</span>
+<span class="cm"> Reset LCD display and wait 500ms</span>
+<span class="cm"> --------------------------------------------------------------------------------------*/</span>
+<span class="kt">void</span> <span class="nf">clearDisplay</span><span class="p">()</span>
+<span class="p">{</span>
+  <span class="n">lcd</span><span class="p">.</span><span class="n">clear</span><span class="p">();</span>
+  <span class="n">delay</span><span class="p">(</span> <span class="mi">500</span> <span class="p">);</span>
+<span class="p">}</span>
+
+<span class="cm">/*--------------------------------------------------------------------------------------</span>
+<span class="cm"> showAccess()</span>
+<span class="cm"> Show if access is granted or denied</span>
+<span class="cm"> --------------------------------------------------------------------------------------*/</span>
+<span class="kt">void</span> <span class="nf">showAccess</span><span class="p">(</span><span class="kt">bool</span> <span class="n">granted</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">granted</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="n">printText</span><span class="p">(</span> <span class="n">ACCESSDENIED</span><span class="p">,</span> <span class="n">EMPTYLINE</span><span class="p">,</span> <span class="mi">1000</span> <span class="p">);</span>
+  <span class="p">}</span> 
+  <span class="k">else</span>
+  <span class="p">{</span>
+    <span class="n">printText</span><span class="p">(</span> <span class="n">ACCESSGRANTED</span><span class="p">,</span> <span class="n">EMPTYLINE</span><span class="p">,</span> <span class="mi">1000</span> <span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="cm">/*--------------------------------------------------------------------------------------</span>
+<span class="cm"> showCoordinates()</span>
+<span class="cm"> Shows final coordinates</span>
+<span class="cm"> --------------------------------------------------------------------------------------*/</span>
+<span class="kt">void</span> <span class="nf">showCoordinates</span><span class="p">()</span>
+<span class="p">{</span>
+  <span class="n">clearDisplay</span><span class="p">();</span>
+
+  <span class="n">lcd</span><span class="p">.</span><span class="n">setCursor</span><span class="p">(</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span> <span class="p">);</span>
+  <span class="k">for</span> <span class="p">(</span> <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="mi">14</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span> <span class="p">)</span>
+  <span class="p">{</span>
+    <span class="n">lcd</span><span class="p">.</span><span class="n">print</span><span class="p">(</span> <span class="n">COORDINATEN</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="p">);</span>
+    <span class="n">delay</span><span class="p">(</span><span class="mi">500</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="n">lcd</span><span class="p">.</span><span class="n">setCursor</span><span class="p">(</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span> <span class="p">);</span>
+  <span class="k">for</span> <span class="p">(</span> <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="mi">14</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span> <span class="p">)</span>
+  <span class="p">{</span>
+    <span class="n">lcd</span><span class="p">.</span><span class="n">print</span><span class="p">(</span> <span class="n">COORDINATEE</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="p">);</span>
+    <span class="n">delay</span><span class="p">(</span><span class="mi">500</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="n">delay</span><span class="p">(</span><span class="mi">2000</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="cm">/*--------------------------------------------------------------------------------------</span>
+<span class="cm"> printText( char*, char* )</span>
+<span class="cm"> prints text on LCD</span>
+<span class="cm"> --------------------------------------------------------------------------------------*/</span>
+<span class="kt">void</span> <span class="nf">printText</span><span class="p">(</span> <span class="kt">char</span><span class="o">*</span> <span class="n">line1</span><span class="p">,</span> <span class="kt">char</span><span class="o">*</span> <span class="n">line2</span> <span class="p">)</span>
+<span class="p">{</span>
+  <span class="n">printText</span><span class="p">(</span> <span class="n">line1</span><span class="p">,</span> <span class="n">line2</span><span class="p">,</span> <span class="mi">0</span> <span class="p">);</span>
+<span class="p">}</span>
+
+<span class="cm">/*--------------------------------------------------------------------------------------</span>
+<span class="cm"> printText( char*, char*, int )</span>
+<span class="cm"> prints text on LCD</span>
+<span class="cm"> --------------------------------------------------------------------------------------*/</span>
+<span class="kt">void</span> <span class="nf">printText</span><span class="p">(</span> <span class="kt">char</span><span class="o">*</span> <span class="n">line1</span><span class="p">,</span> <span class="kt">char</span><span class="o">*</span> <span class="n">line2</span><span class="p">,</span> <span class="kt">int</span> <span class="n">delayTime</span> <span class="p">)</span>
+<span class="p">{</span>
+  <span class="n">printText</span><span class="p">(</span> <span class="n">line1</span><span class="p">,</span> <span class="n">line2</span><span class="p">,</span> <span class="n">delayTime</span><span class="p">,</span> <span class="nb">false</span> <span class="p">);</span>
+<span class="p">}</span>
+
+<span class="cm">/*--------------------------------------------------------------------------------------</span>
+<span class="cm"> printText( char*, char*, bool )</span>
+<span class="cm"> prints text on LCD</span>
+<span class="cm"> --------------------------------------------------------------------------------------*/</span>
+<span class="kt">void</span> <span class="nf">printText</span><span class="p">(</span> <span class="kt">char</span><span class="o">*</span> <span class="n">line1</span><span class="p">,</span> <span class="kt">char</span><span class="o">*</span> <span class="n">line2</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">center</span> <span class="p">)</span>
+<span class="p">{</span>
+  <span class="n">printText</span><span class="p">(</span> <span class="n">line1</span><span class="p">,</span> <span class="n">line2</span><span class="p">,</span> <span class="nb">false</span> <span class="p">);</span>
+<span class="p">}</span>
+
+<span class="cm">/*--------------------------------------------------------------------------------------</span>
+<span class="cm"> printText( char*, char*, int )</span>
+<span class="cm"> prints text on LCD and waits a delay time</span>
+<span class="cm"> --------------------------------------------------------------------------------------*/</span>
+<span class="kt">void</span> <span class="nf">printText</span><span class="p">(</span> <span class="kt">char</span><span class="o">*</span> <span class="n">line1</span><span class="p">,</span> <span class="kt">char</span><span class="o">*</span> <span class="n">line2</span><span class="p">,</span> <span class="kt">int</span> <span class="n">delayTime</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">center</span> <span class="p">)</span>
+<span class="p">{</span>
+  <span class="n">lcd</span><span class="p">.</span><span class="n">setCursor</span><span class="p">(</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span> <span class="p">);</span>
+  <span class="n">lcd</span><span class="p">.</span><span class="n">print</span><span class="p">(</span> <span class="n">line1</span> <span class="p">);</span>
+  <span class="n">lcd</span><span class="p">.</span><span class="n">setCursor</span><span class="p">(</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span> <span class="p">);</span>
+  <span class="n">lcd</span><span class="p">.</span><span class="n">print</span><span class="p">(</span> <span class="n">line2</span> <span class="p">);</span>
+
+  <span class="n">delay</span><span class="p">(</span> <span class="n">delayTime</span> <span class="p">);</span>
+<span class="p">}</span>
+
+<span class="cm">/*--------------------------------------------------------------------------------------</span>
+<span class="cm"> char* hideChar( char*, int )</span>
+<span class="cm"> disables the char at given position</span>
+<span class="cm"> --------------------------------------------------------------------------------------*/</span>
+<span class="kt">char</span><span class="o">*</span> <span class="nf">hideChar</span><span class="p">(</span> <span class="kt">char</span><span class="o">*</span> <span class="n">text</span><span class="p">,</span> <span class="kt">int</span> <span class="n">pos</span> <span class="p">)</span>
+<span class="p">{</span>
+  <span class="kt">char</span> <span class="n">retValue</span> <span class="p">[</span><span class="mi">16</span><span class="p">];</span>
+  <span class="k">for</span> <span class="p">(</span> <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">16</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span> <span class="p">)</span>
+  <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">==</span> <span class="n">pos</span><span class="p">)</span>
+    <span class="p">{</span>
+      <span class="n">retValue</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="sc">&#39;_&#39;</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">else</span>
+    <span class="p">{</span>
+      <span class="n">retValue</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>  <span class="o">=</span> <span class="n">text</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+    <span class="p">}</span>      
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="n">retValue</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="cm">/*---------------------------------------------------------------------------------------</span>
+<span class="cm"> get_key( unsigned int )</span>
+<span class="cm"> Convert ADC value to key number</span>
+<span class="cm"> ---------------------------------------------------------------------------------------*/</span>
+<span class="kt">int</span> <span class="nf">get_key</span><span class="p">(</span><span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">input</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="kt">int</span> <span class="n">retValue</span><span class="p">;</span>
+
+  <span class="k">for</span> <span class="p">(</span><span class="n">retValue</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">retValue</span> <span class="o">&lt;</span> <span class="n">NUMKEYS</span><span class="p">;</span> <span class="n">retValue</span><span class="o">++</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">input</span> <span class="o">&lt;</span> <span class="n">key_val</span><span class="p">[</span><span class="n">retValue</span><span class="p">])</span>
+    <span class="p">{</span>
+      <span class="k">return</span> <span class="n">retValue</span><span class="p">;</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+
+  <span class="k">if</span> <span class="p">(</span><span class="n">retValue</span> <span class="o">&gt;=</span> <span class="n">NUMKEYS</span><span class="p">)</span> <span class="n">retValue</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>  <span class="c1">// No valid key pressed</span>
+  <span class="k">return</span> <span class="n">retValue</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="cm">/*---------------------------------------------------------------------------------------</span>
+<span class="cm"> changeNumber( int, int )</span>
+<span class="cm"> increment or decrement the value at given position </span>
+<span class="cm"> ---------------------------------------------------------------------------------------*/</span>
+<span class="kt">void</span> <span class="nf">changeNumber</span><span class="p">(</span> <span class="kt">int</span> <span class="n">pos</span><span class="p">,</span> <span class="kt">int</span> <span class="n">value</span> <span class="p">)</span>
+<span class="p">{</span>
+  <span class="kt">int</span> <span class="n">val</span> <span class="o">=</span> <span class="n">atoi</span><span class="p">(</span><span class="o">&amp;</span><span class="n">code</span><span class="p">[</span><span class="n">pos</span><span class="p">]);</span>
+  <span class="n">val</span> <span class="o">+=</span> <span class="n">value</span><span class="p">;</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">val</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="n">val</span> <span class="o">=</span> <span class="mi">9</span><span class="p">;</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">val</span> <span class="o">&gt;</span> <span class="mi">9</span><span class="p">)</span> <span class="n">val</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="n">code</span><span class="p">[</span><span class="n">pos</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="kt">char</span><span class="p">)</span> <span class="n">val</span> <span class="o">+</span> <span class="sc">&#39;0&#39;</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<h2>Stückliste</h2>
+
+<h2>Schaltplan</h2>
+
+      </section>
+    </div>
+
+  </body>
+</html>

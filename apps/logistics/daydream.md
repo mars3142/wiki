@@ -14,12 +14,12 @@ Hier mal ein paar Work in Progress Videos...
 
 ## Progress 1
 
-{{youtube>large:awxHmS_aAmE}} 
+<iframe width="560" height="420" src="//www.youtube.com/embed/awxHmS_aAmE?color=white&theme=light\"></iframe>
 
 Es können schon die Autos in beide Richtungen fahren, aber es gibt noch keine Collision Detection oder gar Fahrbahnen...
 
 ## Progress 2
 
-{{youtube>large:217ZPUbbtok}}
+<iframe width="560" height="420" src="//www.youtube.com/embed/217ZPUbbtok?color=white&theme=light\"></iframe>
 
 Dieses Mal habe ich die Erstellung der Autos auf JSON Metadaten umgestellt, damit diese ohne jegliche Programmanpassung beliebig erweitert werden kann. Außerdem wurde die Möglichkeit geschaffen, per Zufall Anhänger an die Wagen zu hängen...
