@@ -20,13 +20,19 @@ Die Wahl von libgdx war bis jetzt am erfolgreichsten. Dank der Tutorials von [de
 
 Außerdem wird es eine Version in deutsch und englisch geben, zumindest am Anfang. Die Sprachen können auch direkt im Spiel geändert werden, weil ich z.B. meine Testgeräte auf englisch gestellt habe, aber auch die deutschen Texte testen muss. Dabei möchte ich nicht immer erst die Systemsprache anpassen.
 
-## artemis
+## Entity Systeme
+
+Ein Entity System ist für einzelne Programmbereiche, aus meiner Sicht, sinnvoll, weil es eine logische Trennung zwischen Logik und grafischer Darstellung darstellt. Ich habe mehrere Entity Systeme getestet, die ich hier kurz anreißen möchte.
+
+### artemis
 
 Artemis ist ein Entity System Framework und somit kann ich es gut für einzelne Bereiche im Spiel einsetzen. Welche das sein werden, weiß ich noch nicht, aber es wird garantiert in der [Daydream](daydream) Funktionalität genutzt werden.
 
-## ashley
+### ashley
 
-Neben Artemis gibt es noch ein zweites Entity System Framework, welches derzeit sogar noch teilweise weiterentwickelt wird. Der einzige Unterschied, den ich zu Artemis feststellen konnte, ist der Fakt, dass es viel allgemeiner gehalten ist.
+Neben Artemis gibt es noch ein zweites Entity System Framework, welches derzeit sogar noch teilweise weiterentwickelt wird. Der einzige Unterschied, den ich zu Artemis feststellen konnte, ist der Fakt, dass es viel allgemeiner gehalten ist. 
+
+Nachdem ich ein wenig mehr mit Ashley ausprobiert habe, bin ich zu dem Entschluss gekommen, dass ich mich von Artemis komplett trenne und voll und ganz auf Ashley setze. Der Artemis Programmpart wurde vollständig auf Ashley portiert und läuft auch.
 
 ## Funktionen
 
