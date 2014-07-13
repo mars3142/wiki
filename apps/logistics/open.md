@@ -4,7 +4,7 @@ layout: default
 ---
 ## Ungeklärtes
 
-  * Synchronisation zwischen mehreren Geräten
+  * Synchronisation zwischen mehreren Geräten (Cloud Save)
   * Multiplayer Support 
     * Freunde sind Mitbewerber 
     * man kann Aufträge an Freunde verkaufen
