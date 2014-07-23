@@ -2,13 +2,13 @@
 title: Logistics
 layout: default
 ---
-Logistics ist als Spiel geplant, welches unter Android laufen soll. Derzeit ist es noch in der Planungs- bzw. Probierphase. Es ist durch das Spiel [Der Planer](http://de.wikipedia.org/wiki/Der_Planer) inspiriert. Ich habe sogar mit Holger Beisheim (geb. Dickmann) gemailt und somit den rechtlichen Rahmen abgeklärt.
+Logistics ist als Spiel geplant, welches unter Android laufen soll. Derzeit ist es noch in der Planungs- bzw. Probierphase. Es ist durch das Spiel [Der Planer][1] inspiriert. Ich habe sogar mit Holger Beisheim (geb. Dickmann) gemailt und somit den rechtlichen Rahmen abgeklärt.
 
-Es gibt zwei Seiten auf Google+ bzgl. dem Spiel. Die eine Seite ist die [Community](https://plus.google.com/communities/112783520362507786585), wo sich Spieler austauschen können und das andere ist das [Profil](https://plus.google.com/107995254283921704484/posts), wo ich wichtige Bekanntmachungen veröffentlichen werde. Vielleicht mache ich das auch nur alles in der Community.
+Es gibt zwei Seiten auf Google+ bzgl. dem Spiel. Die eine Seite ist die [Community][2], wo sich Spieler austauschen können und das andere ist das [Profil][3], wo ich wichtige Bekanntmachungen veröffentlichen werde. Vielleicht mache ich das auch nur alles in der Community.
 
 ## Grundlagen
 
-Mein erster Versuch war, das Spiel per [GLSurfaceView](http://developer.android.com/reference/android/opengl/GLSurfaceView.html) zu erstellen, aber hat sich für mich als sehr umständlich herausgestellt. Der zweite Versuch war dann die beliebte [AndEngine](http://www.andengine.org/) zu benutzen, doch irgendwie kam ich damit auch nicht so wirklich weiter. 
+Mein erster Versuch war, das Spiel per [GLSurfaceView][4] zu erstellen, aber hat sich für mich als sehr umständlich herausgestellt. Der zweite Versuch war dann die beliebte [AndEngine](http://www.andengine.org/) zu benutzen, doch irgendwie kam ich damit auch nicht so wirklich weiter. 
 
 Weitere Nachforschungen brachten mich dann zu [libgdx](http://libgdx.badlogicgames.com/) und dann habe ich noch durch Zufall [artemis](http://gamadu.com/artemis/) gefunden, die im Zusammenspiel gut funktionieren. Libgdx hat den Vorteil, dass man plattformübergreifend mit Java entwickeln kann und somit direkt auf dem Desktop entwickeln und debuggen kann. Später wird dann einfach ein anderer Starter für Android genommen und der Code klappt damit genauso unter Android. Außerderm könnte man ohne viel Aufwand fürs Web (mit Hilfe des [Google Web Toolkits](https://developers.google.com/web-toolkit/)) oder für iOS (via [MonoTouch](http://xamarin.com/monotouch|Monotouch)) ebenfalls Versionen erstellen.
 
@@ -43,3 +43,17 @@ Hier eine grobe Übersicht der wichtigsten Funktionen die später im Spiel einge
 * [Spriter](spriter) - Animationssystem
 
 Außerdem sind noch ein paar Fragen offen, die ich unter [Offene Punkte](open) zusammenfasse. Es ist also eine Art Ideensammlung.
+
+## Erweiterte Daten
+
+Ich wollte euch ein wenig mehr an Informationen an die Hand geben und daher habe ich hier ein paar zusätzliche Daten bereit gestellt. Dabei ist zu beachten, dass sich diese Dateien sehr schnell ändern können.
+
+* [Javadoc](javadoc)
+* [Pflichtenheft][100]
+
+[1]: (http://de.wikipedia.org/wiki/Der_Planer)
+[2]: (https://plus.google.com/communities/112783520362507786585)
+[3]: (https://plus.google.com/107995254283921704484/posts)
+[4]: (http://developer.android.com/reference/android/opengl/GLSurfaceView.html)
+
+[100]: (http://wiki.mars3142.org/apps/logistics/handbuch-pdf)
