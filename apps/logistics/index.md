@@ -38,22 +38,20 @@ Nachdem ich ein wenig mehr mit Ashley ausprobiert habe, bin ich zu dem Entschlus
 
 Hier eine grobe Übersicht der wichtigsten Funktionen die später im Spiel eingebaut sein sollen.
 
-* [Daydream](daydream) - Bildschirmschoner (Android 4.2+)
-* [Google Play Game Service](googleplaygameservice) - Unterstützung für Erfolge und/oder Highscore
-* [Spriter](spriter) - Animationssystem
+* [Daydream](daydream.html) - Bildschirmschoner (Android 4.2+)
+* [Google Play Game Service](googleplaygameservice.html) - Unterstützung für Erfolge und/oder Highscore
+* [Spriter](spriter.html) - Animationssystem
 
-Außerdem sind noch ein paar Fragen offen, die ich unter [Offene Punkte](open) zusammenfasse. Es ist also eine Art Ideensammlung.
+Außerdem sind noch ein paar Fragen offen, die ich unter [Offene Punkte](open.html) zusammenfasse. Es ist also eine Art Ideensammlung.
 
 ## Erweiterte Daten
 
 Ich wollte euch ein wenig mehr an Informationen an die Hand geben und daher habe ich hier ein paar zusätzliche Daten bereit gestellt. Dabei ist zu beachten, dass sich diese Dateien sehr schnell ändern können.
 
 * [Javadoc](javadoc)
-* [Pflichtenheft][100]
+* [Pflichtenheft](pdf/handbuch.pdf)
 
 [1]: (http://de.wikipedia.org/wiki/Der_Planer)
 [2]: (https://plus.google.com/communities/112783520362507786585)
 [3]: (https://plus.google.com/107995254283921704484/posts)
 [4]: (http://developer.android.com/reference/android/opengl/GLSurfaceView.html)
-
-[100]: (http://wiki.mars3142.org/apps/logistics/handbuch-pdf)
