@@ -49,7 +49,7 @@ Außerdem sind noch ein paar Fragen offen, die ich unter [Offene Punkte](open.ht
 Ich wollte euch ein wenig mehr an Informationen an die Hand geben und daher habe ich hier ein paar zusätzliche Daten bereit gestellt. Dabei ist zu beachten, dass sich diese Dateien sehr schnell ändern können.
 
 * [Javadoc](javadoc)
-* [Pflichtenheft](pdf/logistics.de.pdf)
+* [Handbuch](handbuch)
 
 [1]: (http://de.wikipedia.org/wiki/Der_Planer)
 [2]: (https://plus.google.com/communities/112783520362507786585)
