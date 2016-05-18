@@ -18,7 +18,11 @@ So bin ich also gerade an dem Punkt angelangt, wo ich mir libgdx und artemis gen
 
 Die Wahl von libgdx war bis jetzt am erfolgreichsten. Dank der Tutorials von [dermetfan](http://dermetfan.bplaced.net/) verstehe ich auch die Scene2d Implementation und kann es direkt in meinem Projekt anwenden. Leider ist an mir kein Designer verloren gegangen und somit wird mein Prototyp sicher alles andere als grafisch eine Sensation, aber durch einen glücklichen Umstand habe ich im libgdx Forum ein Holo UI Skin gefunden und dieses werde ich für den Anfang nehmen. Der Ersteller (Carsten) ist ebenfalls ein deutschsprachiger und somit werden Anpassungen recht schnell umgesetzt.
 
-Außerdem wird es eine Version in deutsch und englisch geben, zumindest am Anfang. Die Sprache wird die Systemsprache des Gerätes nutzen und wenn sollte es die Sprache nicht geben, wird automatisch auf Englisch geschaltet.
+Außerdem wird es eine Version in Deutsch und Englisch geben, zumindest am Anfang. Die Sprache wird die Systemsprache des Gerätes nutzen und wenn sollte es die Sprache nicht geben, wird automatisch auf Englisch geschaltet.
+
+## cocos2d-x
+
+Durch das offizielle Schließen von [RoboVM](https://robovm.com/) und der offensichtlichen Schwierigkeit in Zukunft Multiplatform zu entwickeln, habe ich mich mich mit [cocos2d-x](http://cocos2d-x.org) befasst. Dieses Framework wird in C/C++ geschrieben. Das heißt, es werden hinterher direkt native Apps erstellt, ohne den Umweg durch einen Konverter wie bei RoboVM. Ein Nachteil ergibt sich für mich dabei, aber der kann am Ende eine Bereicherung für mich sein. Ich bin zulange aus dem C++ Thema draußen, aber komme schnell wieder rein. Und meine bisherigen Libraries, die ich für libgdx gefunden habe, kann ich vergessen und muss mir Alternativen suchen oder es selber schreiben bzw. portieren. Mal schauen, vielleicht gibt es bei cocos2d-x auch ganz andere Ansätze dafür.
 
 ## Entity Systeme
 
